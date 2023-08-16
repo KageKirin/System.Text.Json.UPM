@@ -27,13 +27,13 @@ runs:
   - uses: kagekirin/gha-dotnet/.github/actions/nuget-fetch@main
     with:
       package: System.Text.Json
-      framework: netstandard2.1
+      framework: netstandard2.0
       prerelease: false
       outdir: ./
   - id: nuget-version
     uses: kagekirin/gha-dotnet/.github/actions/dll-get-version@main
     with:
-      file: System.Text.Json*/lib/netstandard2.1/System.Text.Json.dll
+      file: System.Text.Json*/lib/netstandard2.0/System.Text.Json.dll
   - id: compare
     uses: kagekirin/node-package-version/.github/actions/compare-version@main
     with:
