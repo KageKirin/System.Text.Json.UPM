@@ -9,7 +9,7 @@ runs:
     with:
       package: System.Text.Json
       framework: netstandard2.1
-      prerelease: true
+      prerelease: false
       outdir: ./
   - uses: kagekirin/gha-npm/.github/actions/npm-metagen@main
     with:
