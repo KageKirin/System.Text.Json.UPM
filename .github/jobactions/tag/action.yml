@@ -1,0 +1,45 @@
+name: jobactions/tag
+inputs:
+  prerelease:
+    description: version '-prerelease.num' part
+    required: false
+    default: ''
+  buildmeta:
+    description: version '+buildmeta.text' part
+    required: false
+    default: ''
+outputs:
+  nuget-version:
+    description: nuget tag/version
+    value: ${{ steps.nuget-version.outputs.version }}
+  compare:
+    description: updated tag/version
+    value: ${{ steps.nuget-version.outputs.version }}
+  version:
+    description: updated tag/version
+    value: ${{ steps.nuget-version.outputs.version }}
+runs:
+  using: composite
+  steps:
+  - uses: kagekirin/gha-utils/.github/actions/install-prerequisites@main
+  - uses: kagekirin/gha-utils/.github/actions/install-version-tools@main
+  - uses: kagekirin/metagen-js/.github/actions/install@main
+  - uses: kagekirin/gha-dotnet/.github/actions/nuget-fetch@main
+    with:
+      package: System.Text.Json
+      framework: netstandard2.1
+      prerelease: true
+      outdir: ./
+  - id: nuget-version
+    uses: kagekirin/gha-dotnet/.github/actions/dll-get-version@main
+    with:
+      file: System.Text.Json*/lib/netstandard2.1/System.Text.Json.dll
+  - id: compare
+    uses: kagekirin/node-package-version/.github/actions/compare-version@main
+    with:
+      file: package.json
+      version: ${{ steps.nuget-version.outputs.version }}
+  - if: "${{ steps.compare.outputs.result }} > 0"
+    shell: bash
+    run: |-
+      npm version ${{ steps.nuget-version.outputs.version }}
