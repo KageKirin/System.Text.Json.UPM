@@ -28,7 +28,7 @@ runs:
     with:
       package: System.Text.Json
       framework: netstandard2.1
-      prerelease: true
+      prerelease: false
       outdir: ./
   - id: nuget-version
     uses: kagekirin/gha-dotnet/.github/actions/dll-get-version@main
