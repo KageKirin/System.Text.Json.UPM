@@ -8,7 +8,7 @@ runs:
   - uses: kagekirin/gha-dotnet/.github/actions/nuget-fetch@main
     with:
       package: System.Text.Json
-      framework: netstandard2.1
+      framework: netstandard2.0
       prerelease: false
       outdir: ./
   - uses: kagekirin/gha-npm/.github/actions/npm-metagen@main
