@@ -1,0 +1,24 @@
+name: System.Text.Json.UPM/publish
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: kagekirin/gha-utils/.github/actions/git-checkout-tags@main
+    - uses: ./.github/jobactions/build
+    - uses: kagekirin/gha-npm/.github/actions/npm-add-registry@main
+      with:
+        registry: https://npm.pkg.github.com/@kagekirin
+        token: ${{ secrets.GH_NPM_TOKEN }}
+    - uses: kagekirin/gha-npm/.github/actions/npm-publish@main
+      with:
+        token: ${{ secrets.GH_NPM_TOKEN }}
+    - uses: kagekirin/gha-npm/.github/actions/npm-publish@main
+      with:
+        dry-run: false
