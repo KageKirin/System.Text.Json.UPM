@@ -1,0 +1,36 @@
+name: System.Text.Json.UPM/build-cron
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: kagekirin/gha-utils/.github/actions/git-checkout-tags@main
+    - uses: ./.github/jobactions/build
+    - uses: kagekirin/gha-npm/.github/actions/npm-add-registry@main
+      with:
+        registry: https://npm.pkg.github.com/@kagekirin
+        token: ${{ github.token }}
+    - uses: kagekirin/gha-npm/.github/actions/npm-publish@main
+      with:
+        dry-run: true
+
+  tag:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: kagekirin/gha-utils/.github/actions/git-checkout-tags@main
+      with:
+        ssh-key: "${{secrets.DEPLOY_KEY}}"
+        username: CI Bot (on behalf of ${{ github.actor }})
+        useremail: "kagekirin+githubci@gmail.com"
+    - uses: ./.github/jobactions/tag
+    - uses: kagekirin/gha-utils/.github/actions/git-push-tag@main
+      with:
+        remote: origin
+        branch: main
+        dry-run: false
