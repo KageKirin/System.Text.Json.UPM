@@ -1,0 +1,31 @@
+{
+    "name": "com.github.dotnet.system.text.json",
+    "version": "0.0.0",
+    "displayName": "System.Text.Json (DLL)",
+    "description": "low-level, forward-only, JSON serialization library -- Unity-compatible Runtime DLL only",
+    "unity": "2021.1",
+    "files": [
+        "**.meta",
+        "**.md",
+        "System.Text.Json*/lib/netstandard2.1/*.dll"
+    ],
+    "dependencies": {},
+    "keywords": [
+        "csharp",
+        "serialization",
+        "json"
+    ],
+    "author": {
+        "name": "Chris Helmich",
+        "email": "kagekirin@gmail.com",
+        "url": "https://github.com/kagekirin"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kagekirin/system.text.json.upm.git",
+        "directory": "system.text.json.upm"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/@kagekirin"
+    }
+}
